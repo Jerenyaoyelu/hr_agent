@@ -1,0 +1,57 @@
+{
+  "watch_dir": "./resumes",
+  "output_dir": "./output",
+  "log_file": "./logs/hr_agent.log",
+  "supported_extensions": [".pdf", ".doc", ".docx"],
+  "openai_api_key": "",
+
+  "job_requirement": {
+    "title": "Python开发工程师",
+    "required_skills": ["Python", "Django/Flask", "SQL", "Git"],
+    "preferred_skills": ["Docker", "Kubernetes", "CI/CD", "AWS/Azure"],
+    "minimum_years_experience": 3,
+    "education_requirement": "本科",
+    "job_description": "我们正在寻找一位经验丰富的Python开发工程师加入我们的团队。该职位需要具备扎实的Python编程基础，熟悉Web开发框架，并且有实际的项目经验。"
+  },
+
+  "interviewers": [
+    {
+      "name": "张三",
+      "email": "zhangsan@example.com",
+      "expertise": ["Python", "系统架构"],
+      "available_slots": [
+        {
+          "start": "2024-03-27T09:00:00",
+          "end": "2024-03-27T12:00:00"
+        },
+        {
+          "start": "2024-03-28T14:00:00",
+          "end": "2024-03-28T17:00:00"
+        }
+      ]
+    },
+    {
+      "name": "李四",
+      "email": "lisi@example.com",
+      "expertise": ["后端开发", "数据库"],
+      "available_slots": [
+        {
+          "start": "2024-03-27T14:00:00",
+          "end": "2024-03-27T17:00:00"
+        },
+        {
+          "start": "2024-03-28T09:00:00",
+          "end": "2024-03-28T12:00:00"
+        }
+      ]
+    }
+  ],
+
+  "smtp_config": {
+    "host": "smtp.example.com",
+    "port": "587",
+    "username": "hr@example.com",
+    "password": "your-password-here",
+    "from_email": "hr@example.com"
+  }
+}
