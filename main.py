@@ -1,9 +1,10 @@
+import time
 import yaml
 from pathlib import Path
 from core.file_watcher import FileMonitor
 
 def load_config():
-    with open("config/settings.yaml") as f:
+    with open("config/settings.yaml", encoding='utf-8') as f:
         return yaml.safe_load(f)
 
 if __name__ == "__main__":
