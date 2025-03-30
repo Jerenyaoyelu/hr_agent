@@ -2,14 +2,14 @@ import shutil
 from pathlib import Path
 import json
 
-from core.text_extractor import extract_text
+from core.text_extractor import extract_text_pages
 from .parser import ResumeParser
 from .evaluator import ResumeEvaluator
 
 def process_resume(file_path):
     try:
         # 读取文件内容
-        text = extract_text(file_path)
+        text = extract_text_pages(file_path)
         
         # 解析简历
         parser = ResumeParser()
@@ -36,6 +36,7 @@ def process_resume(file_path):
         archive_file(file_path)
         
     except Exception as e:
+        print('报错了',e)
         handle_error(e, file_path)
 
 def save_output(file_path, data):

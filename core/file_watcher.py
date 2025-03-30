@@ -23,8 +23,12 @@ class FileMonitor:
         print(f"开始监控文件夹: {self.watch_path}")
         
     def process_file(self, file_path):
-        if file_path.suffix.lower() not in ['.pdf', '.docx']:
+        if file_path.suffix.lower() not in ['.pdf', '.docx', '.doc']:
             print(f"忽略非简历文件: {file_path.name}")
+            return
+        
+        if file_path.name.startswith('~$'):
+            print(f"忽略临时文件: {file_path.name}")
             return
             
         print(f"发现新简历: {file_path.name}")
