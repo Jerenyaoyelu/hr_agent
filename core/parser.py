@@ -2,13 +2,12 @@ from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 import json
 import os
-from configparser import ConfigParser
+from config.config_loader import load_config
 
 class ResumeParser:
     def __init__(self):
-        config = ConfigParser()
-        config.read('config/settings.yaml')
-        
+        config = load_config()  # 调用封装的方法
+        print('config', config)
         self.llm = ChatOpenAI(
             openai_api_base=os.getenv("DEEPSEEK_API_BASE", config['deepseek']['api_base']),
             openai_api_key=os.getenv("DEEPSEEK_API_KEY", config['deepseek']['api_key']),
@@ -45,6 +44,7 @@ class ResumeParser:
     def parse(self, text):
         try:
             chain = self.prompt | self.llm
+            print('parse', text)
             result = chain.invoke({"resume_text": text})
             return self._validate_json(result.content)
         except Exception as e:

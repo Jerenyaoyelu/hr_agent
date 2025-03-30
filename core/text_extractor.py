@@ -17,6 +17,7 @@ def extract_text_pages(file_path):
         if file_path.suffix.lower() == ".pdf":
             # 使用 PyPDF2 提取 PDF 文本
             text = extract_pdf_text(file_path)
+            # print('result', text)
         elif file_path.suffix.lower() == ".docx":
             # 使用 python-docx 提取 DOCX 文本
             text = extract_docx_text(file_path)
@@ -26,9 +27,9 @@ def extract_text_pages(file_path):
         else:
             raise ValueError(f"Unsupported file format: {file_path.suffix}")
 
-        if not text.strip():
+        if not text:
             raise ValueError(f"No text found in the file: {file_path}")
-        return text.strip()
+        return text
     except Exception as e:
         raise RuntimeError(f"Failed to extract text from {file_path}: {e}")
 
@@ -43,8 +44,8 @@ def extract_pdf_text(file_path):
         text = ""
         for page in reader.pages:
             text += page.extract_text() or ""  # 提取每一页的文本
-            print(text)
-        return text.strip()
+            # print(f"Page {page_num + 1} content:\n{text}\n")
+        return text
     except Exception as e:
         raise RuntimeError(f"Failed to extract text from PDF file {file_path}: {e}")
 

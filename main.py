@@ -1,14 +1,10 @@
 import time
-import yaml
 from pathlib import Path
 from core.file_watcher import FileMonitor
-
-def load_config():
-    with open("config/settings.yaml", encoding='utf-8') as f:
-        return yaml.safe_load(f)
+from config.config_loader import load_config  # 导入封装的工具方法
 
 if __name__ == "__main__":
-    config = load_config()
+    config = load_config()  # 调用封装的方法
     
     # 创建输入输出目录
     Path(config['paths']['input_folder']).mkdir(exist_ok=True)

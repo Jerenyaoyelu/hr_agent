@@ -66,7 +66,8 @@
 1. 启动系统：
 
    ```bash
-   python src/main.py
+   - .\venv\Scripts\Activate.ps1
+   - python src/main.py
    ```
 
 2. 将简历文件放入监控文件夹中，系统将自动开始处理

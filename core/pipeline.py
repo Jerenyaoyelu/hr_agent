@@ -10,10 +10,13 @@ def process_resume(file_path):
     try:
         # 读取文件内容
         text = extract_text_pages(file_path)
-        
+        # print('text',text)
+        print('runnnn000')
         # 解析简历
         parser = ResumeParser()
+        print('runnnn')
         parsed_data = parser.parse(text)
+        print('runnnn1')
         if not parsed_data:
             raise ValueError("简历解析失败")
         # 打印解析后的数据
