@@ -39,8 +39,6 @@ def extract_pdf_text(file_path):
     """
     try:
         reader = PdfReader(str(file_path))
-        number_of_pages = len(reader.pages)
-        print(number_of_pages)
         text = ""
         for page in reader.pages:
             text += page.extract_text() or ""  # 提取每一页的文本

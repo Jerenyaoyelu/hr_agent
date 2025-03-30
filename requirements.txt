@@ -8,4 +8,5 @@ requests==2.32.3
 sentence-transformers==3.0.0
 pywin32==310  # 添加 pywin32 依赖
 pypdf==5.4.0
+langchain==0.3.21
 # deepseek-ai==0.0.1

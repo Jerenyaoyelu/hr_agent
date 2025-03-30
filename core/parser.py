@@ -1,20 +1,20 @@
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 import json
-import os
 from config.config_loader import load_config
+from core.deepseek_llm import DeepSeekLLM  # 假设自定义类放在 core/deepseek_llm.py
 
 class ResumeParser:
     def __init__(self):
-        config = load_config()  # 调用封装的方法
+        config = load_config()
         print('config', config)
-        self.llm = ChatOpenAI(
-            openai_api_base=os.getenv("DEEPSEEK_API_BASE", config['deepseek']['api_base']),
-            openai_api_key=os.getenv("DEEPSEEK_API_KEY", config['deepseek']['api_key']),
+        self.llm = DeepSeekLLM(
+            api_base=config['deepseek']['api_base'],
+            api_key=config['deepseek']['api_key'],
             model_name=config['deepseek']['model'],
             temperature=0.1
         )
-        
+        print(self.llm._llm_type)
         self.prompt = ChatPromptTemplate.from_template("""
         [角色] 你是专业招聘专家
         [任务] 从简历内容提取结构化信息：
@@ -40,11 +40,11 @@ class ResumeParser:
         2. 没有明确信息时填写null
         3. 工作年限按数值类型返回
         """)
-        
+
     def parse(self, text):
         try:
             chain = self.prompt | self.llm
-            print('parse', text)
+            print('chain', chain)
             result = chain.invoke({"resume_text": text})
             return self._validate_json(result.content)
         except Exception as e:
