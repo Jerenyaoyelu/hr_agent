@@ -9,4 +9,6 @@ sentence-transformers==3.0.0
 pywin32==310  # 添加 pywin32 依赖
 pypdf==5.4.0
 langchain==0.3.21
+ollama==0.4.7
+aiohttp==3.11.16
 # deepseek-ai==0.0.1

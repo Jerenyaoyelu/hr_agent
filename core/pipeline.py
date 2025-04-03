@@ -1,12 +1,12 @@
 import shutil
 from pathlib import Path
 import json
-
+import asyncio
 from core.text_extractor import extract_text_pages
 from .parser import ResumeParser
 from .evaluator import ResumeEvaluator
 
-def process_resume(file_path):
+async def process_resume(file_path):
     try:
         # 读取文件内容
         text = extract_text_pages(file_path)
@@ -20,16 +20,18 @@ def process_resume(file_path):
         # 评估简历
         evaluator = ResumeEvaluator()
         evaluator.load_jd(load_job_description())  # 从文件读取岗位描述
-        evaluation = evaluator.evaluate(text)
-        
-        # 处理结果
-        output = {
-            "candidate": parsed_data,
-            "evaluation": evaluation
-        }
+        results = await asyncio.run(evaluator.batch_analyze([parsed_data]))
+         # 生成报告
+        report = evaluator.generate_report(results, "resume_report.json")
+        # # 处理结果
+        # output = {
+        #     "candidate": parsed_data,
+        #     "evaluation": evaluation
+        # }
         
         # 保存结果
-        save_output(file_path, output)
+        # save_output(file_path, output)
+        print(report)
         
         # 归档文件
         archive_file(file_path)
