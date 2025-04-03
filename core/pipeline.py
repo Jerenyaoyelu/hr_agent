@@ -12,7 +12,7 @@ async def process_resume(file_path):
         text = extract_text_pages(file_path)
         # 解析简历
         parser = ResumeParser()
-        parsed_data = parser.parse(text)
+        parsed_data = await asyncio.run(parser.parse(text))
         if not parsed_data:
             raise ValueError("简历解析失败")
         # 打印解析后的数据
