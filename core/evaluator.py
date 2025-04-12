@@ -5,7 +5,7 @@ import aiohttp
 import asyncio
 from langchain_openai import ChatOpenAI
 from typing import List, Dict
-from llm.ollama_ds import OllamaDeepseek
+from .llm.ollama_ds import OllamaDeepseek
 from configparser import ConfigParser
 
 class ResumeEvaluator:

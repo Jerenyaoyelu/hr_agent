@@ -1,15 +1,17 @@
 import json
 import aiohttp
 from config.config_loader import load_config
-from llm.ollama_ds import OllamaDeepseek
+from .llm.ollama_ds import OllamaDeepseek
 
 class ResumeParser:
     def __init__(self):
         config = load_config()
         print('config', config)
         self.ds = OllamaDeepseek(config['deepseek']['model'])
-        print(self.llm._llm_type)
-        self.prompt = f"""
+        self.resume_text = ""  # 初始化 resume_text
+
+    def generate_prompt(self):
+        return f"""
         [角色] 你是专业招聘专家
         [任务] 从简历内容提取结构化信息：
         ---
@@ -46,7 +48,7 @@ class ResumeParser:
 
     async def parse(self, session: aiohttp.ClientSession, text:str):
         self.resume_text = text
-        raw_response = await self.ds.call_model(session, self.prompt)
+        raw_response = await self.ds.call_model(session, self.generate_prompt())
         if not raw_response:
             return {"error": "模型调用失败"}
         try:

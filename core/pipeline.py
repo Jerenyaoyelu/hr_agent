@@ -2,6 +2,7 @@ import shutil
 from pathlib import Path
 import json
 import asyncio
+import aiohttp
 from core.text_extractor import extract_text_pages
 from .parser import ResumeParser
 from .evaluator import ResumeEvaluator
@@ -12,7 +13,8 @@ async def process_resume(file_path):
         text = extract_text_pages(file_path)
         # 解析简历
         parser = ResumeParser()
-        parsed_data = await asyncio.run(parser.parse(text))
+        async with aiohttp.ClientSession() as session:
+            parsed_data = await parser.parse(session,text)
         if not parsed_data:
             raise ValueError("简历解析失败")
         # 打印解析后的数据

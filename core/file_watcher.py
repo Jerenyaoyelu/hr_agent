@@ -26,12 +26,21 @@ class FileMonitor:
         if file_path.suffix.lower() not in ['.pdf', '.docx', '.doc']:
             print(f"忽略非简历文件: {file_path.name}")
             return
-        
+
         if file_path.name.startswith('~$'):
             print(f"忽略临时文件: {file_path.name}")
             return
-            
+
         print(f"发现新简历: {file_path.name}")
         # 触发处理流水线
         from core.pipeline import process_resume
-        process_resume(file_path)
+        import asyncio
+
+        # 检查是否在事件循环中
+        try:
+            loop = asyncio.get_running_loop()
+            # 如果有事件循环，创建任务
+            loop.create_task(process_resume(file_path))
+        except RuntimeError:
+            # 如果没有事件循环，直接运行
+            asyncio.run(process_resume(file_path))
