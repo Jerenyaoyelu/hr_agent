@@ -5,7 +5,7 @@ from typing import Optional
 class OllamaDeepseek:
     def __init__(
         self, 
-        model_name: str = "deepseek-r1-1.5b",
+        model_name: str = "deepseek-r1:1.5b",
         base_url: str = "http://localhost:11434",
         max_concurrency: int = 10,
         retries: int = 3
@@ -44,8 +44,10 @@ class OllamaDeepseek:
                     async with session.post(
                         f"{self.base_url}/api/generate",
                         json=payload,
+                        headers={"Content-Type": "application/json"},
                         timeout=30
                     ) as response:
+                        print(f"请求状态码：{response}")
                         if response.status == 200:
                             data = await response.json()
                             return data.get("response", "")

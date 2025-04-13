@@ -5,7 +5,7 @@ paths:
 deepseek:
   api_base: "https://api.deepseek.com/v1"
   api_key: "sk-5465dcc853f3417fb9e42125edb16ff2" # 在官网申请
-  model: "deepseek-r1-1.5b"
+  model: "deepseek-r1:1.5b"
 
 logging:
   level: "INFO"
