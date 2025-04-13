@@ -48,16 +48,28 @@ class ResumeParser:
 
     async def parse(self, session: aiohttp.ClientSession, text:str):
         self.resume_text = text
-        raw_response = await self.ds.call_model(session, self.generate_prompt())
-        if not raw_response:
-            return {"error": "模型调用失败"}
-        try:
-            # 清洗响应并解析JSON
-            cleaned = raw_response.replace("```json", "").replace("```", "").strip()
-            return json.loads(cleaned)
-        except json.JSONDecodeError:
-            print("JSON解析失败，原始响应：", raw_response)
-            return {"error": "响应格式无效"}
+        print(self.generate_prompt())
+        # raw_response = await self.ds.call_model(session, self.generate_prompt())
+        # async for result in self.ds.call_model(session, self.generate_prompt()):
+        #     if result is None:
+        #         return {"error": "模型调用失败"}
+        #     else:
+        #         print(f"模型返回：{result}")
+
+        #         # 处理流式输出
+
+        #         if result.startswith("```json"):
+        #             # 仅在开始时处理JSON块
+        #             raw_response = result
+                
+        
+        # try:
+        #     # 清洗响应并解析JSON
+        #     cleaned = raw_response.replace("```json", "").replace("```", "").strip()
+        #     return json.loads(cleaned)
+        # except json.JSONDecodeError:
+        #     print("JSON解析失败，原始响应：", raw_response)
+        #     return {"error": "响应格式无效"}
             
     def _validate_json(self, raw):
         try:

@@ -30,7 +30,6 @@ class OllamaDeepseek:
         payload = {
             "model": self.model_name,
             "prompt": prompt,
-            "stream": False,
             "options": {
                 "temperature": 0.3,
                 "max_tokens": 500,
@@ -47,14 +46,19 @@ class OllamaDeepseek:
                         headers={"Content-Type": "application/json"},
                         timeout=30
                     ) as response:
-                        print(f"请求状态码：{response}")
+                        print(f"请求状态码：{response.status}")
                         if response.status == 200:
-                            data = await response.json()
-                            return data.get("response", "")
+                            async for line in response.content:
+                                decoded_line = line.decode("utf-8").strip()
+                                if decoded_line:
+                                    print(f"流式输出：{decoded_line}")
+                                    yield decoded_line
                         else:
                             print(f"请求失败，状态码：{response.status}")
-                            return None
+                            # 使用 yield 返回错误信息
+                            yield None
             except (aiohttp.ClientError, asyncio.TimeoutError) as e:
                 print(f"请求异常（尝试 {attempt+1}/{self.retries}）: {str(e)}")
                 await asyncio.sleep(1)
-        return None
+        # 如果所有重试都失败，结束生成器
+        return
